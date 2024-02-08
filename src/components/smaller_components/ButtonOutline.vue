@@ -1,33 +1,53 @@
+
 <template>
-    <v-row no-gutters :class="marginBottom && 'mb-3'">
-        <v-btn variant="outlined" class="m-auto main-btn">{{ text }}</v-btn>
-    </v-row>
+    <button :class="'m-auto main-btn'" :value="setBtnValue()" @click="(e)  => emitClickEvent(e)">{{ text }}</button>
 </template>
 
+
 <script lang="ts">
-    export default {
+export default {
         name: 'ButtonOutline',
         props: {
             text: String,
-            marginBottom: {
-                type: Boolean,
-                default: false
+        },
+        data(){
+            return {
             }
-        }
-    }
+        },
+        methods: {
+            setBtnValue(){
+                const regex = / /g;
+                const regex2 = /[\u0300-\u036f]/g;
+                return (this.text?.normalize("NFD").replace(regex, '-').replace(regex2, "").toLowerCase());
+            },
+            emitClickEvent(e : any){
+                this.$emit('click', e.target.value);
+            }
+        },
+        emits: ['click']
+}
 </script>
 
 <style scoped>
-.v-btn{
+.main-btn{
+    border-style: solid !important;
+    padding: 2vh 10vh;
+    border-radius: 0.5rem;
+    box-shadow: none !important;
+    width: 100%;
+    border-width: thin !important;
+    cursor: pointer;
+
     background-color: var(--white) !important;
     border-color: var(--dark-blue) !important;
     color: var(--dark-blue) !important;
-    font-weight: 700;
-    width: 100%;
-    cursor: pointer;
+
+    font-weight: 600;
 }
-.mb-3{
-    margin-bottom: 1rem !important;
+.main-btn:hover{
+    background-color: var(--dark-blue) !important;
+    color: var(--white) !important;
 }
+
 
 </style>
