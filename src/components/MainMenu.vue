@@ -1,57 +1,42 @@
 <template>
-
-<v-container fluid id="main-page">
-    <div id="main-page-side" class="bg-blue">
-        <v-row class="position-middle m-auto">
-            <img src="../assets/images/unit-logo.webp" alt="" />
+    <v-container id="menu-container" class="position-middle m-auto w-fit">
+        <v-row v-for="button in buttons" :key="button" no-gutters class="mb-3">
+            <button-outline @click="(e : string)=>navigateSomewhere(e)" :text="button" />
         </v-row>
-    </div>
-
-    <div id="main-page-side">
-        <v-container no-gutters id="menu-container" class="position-middle m-auto">
-            <button-outline margin-bottom text="Horário de Aulas" />
-            <button-outline margin-bottom text="Calendário" />
-            <button-outline margin-bottom text="Contatos Importantes" />
-            <button-outline margin-bottom text="FAQ" />
-            <button-outline text="Admin" />
-        </v-container>
-    </div>
-</v-container>
-
+    </v-container>
 </template>
 
 <script lang="ts">
 import ButtonOutline from '../components/smaller_components/ButtonOutline.vue'
-
     export default {
         name: 'MainMenu',
         components: {
             ButtonOutline
+        },
+        data(){
+            return{
+                buttons: [
+                    "Horário de Aulas",
+                    "Calendário",
+                    "Contatos Importantes",
+                    "FAQ",
+                    "Admin"
+                ]
+            }
+        },
+        methods: {
+            navigateSomewhere(value : String){
+                this.$router.push('/' + value)
+            }
         }
     }
 </script>
 
 <style scoped>
-#main-page{
-    display: flex;
-    padding: 0;
-    /* height: 100vh; */
-    /* width: 100vw; */
-    /* position: relative; */
-}
 
-#main-page-side{
-    position: relative;
-    height: 100vh;
-    width: 50vw;
-}
 
 .v-container{
     padding: 0;
-}
-
-#menu-container{
-    width: 50%;
 }
 
 </style>
